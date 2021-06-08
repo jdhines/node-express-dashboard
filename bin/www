@@ -3,10 +3,11 @@
 /**
  * Module dependencies.
  */
-const WebSocket = require('ws');
 const app = require('../app');
 const debug = require('debug')('log-dashboard:server');
 const http = require('http');
+const WebSocket = require('ws');
+const fs = require('fs');
 
 /**
  * Get port from environment and store in Express.
@@ -28,9 +29,16 @@ const wss = new WebSocket.Server({server: server});
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
 wss.on('connection', (ws) => {
-  ws.on('message', (message) => {
-    ws.send('Hello from the server! You sent: ' + message);
+  ws.on('message', (filePath) => {
+    fs.watch(filePath, () => {
+      fs.createReadStream(filePath).on('data', (chunk) => {
+        let logsArr = chunk.toString().split('\n');
+        const logsStr = logsArr.reverse().join('\n');
+        ws.send(logsStr);
+      });
+    });
   });
 });
 /**
