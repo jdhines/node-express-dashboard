@@ -2,20 +2,17 @@ const express = require('express');
 const router = express.Router();
 const fileService = require('../services/select-file-service');
 const {
+  getDefaultDir,
   getSettings,
   writeSettings,
   isValidDir,
-  getDefaultDir,
 } = require('../services/settings-service.js');
 const {validationResult} = require('express-validator');
 const {body} = require('express-validator');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index', {
-    title: 'Log Dashboard',
-    logFile: req.query.logFile,
-  });
+  res.render('index', {title: 'Log Dashboard', logFile: req.query.logFile});
 });
 
 /* GET select file. */

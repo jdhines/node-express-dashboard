@@ -24,7 +24,7 @@ function getDefaultDir() {
   if (!defaultDir) {
     return process.cwd();
   } else {
-    return isValidDir() ? defaultDir : process.cwd();
+    return isValidDir(defaultDir) ? defaultDir : process.cwd();
   }
 }
 
