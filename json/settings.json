@@ -1,4 +1,4 @@
 {
-  "defaultDir": "",
-  "filter": ""
+  "defaultDir": "log-generator",
+  "filter": "POST"
 }
